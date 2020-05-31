@@ -1,5 +1,5 @@
 ﻿@page "/todo"
-@inject BlazorTodoApp.Client.Pages.Todo.TodoClient client
+@inject BlazorTodoApp.Client.Services.TodoService todoService
 
 <main role="main" class="container">
 
@@ -15,20 +15,20 @@
 
     protected override async Task OnInitializedAsync()
     {
-        todoModels = await client.GetTodos();
+        todoModels = await todoService.GetTodos();
     }
 
     public List<TodoDto> todoModels = new List<TodoDto>();
 
     private async Task AddTodo(TodoDto todoModel)
     {
-        var newModel = await client.AddTodo(todoModel);
+        var newModel = await todoService.AddTodo(todoModel);
         todoModels.Insert(0, newModel);
     }
 
     private async Task UpdateTodo(TodoDto todoModel)
     {
-        var updatedModel = await client.UpdateTodo(todoModel);
+        var updatedModel = await todoService.UpdateTodo(todoModel);
         var existingModel = todoModels.First(x => x.Id == updatedModel.Id);
         var index = todoModels.IndexOf(existingModel);
 
