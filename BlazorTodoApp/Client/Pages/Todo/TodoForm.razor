@@ -1,6 +1,4 @@
-﻿
-
-<EditForm Model="@todoModel" OnValidSubmit="HandleValidSubmit">
+﻿<EditForm Model="@todoModel" OnValidSubmit="HandleValidSubmit">
     <DataAnnotationsValidator />
     <ValidationSummary />
 
@@ -8,16 +6,3 @@
 
     <button type="submit" class="btn btn-primary" disabled="@(String.IsNullOrWhiteSpace(todoModel.Value))">Submit</button>
 </EditForm>
-
-@code {
-
-    [Parameter]
-    public EventCallback<TodoDto> TodoAdded { get; set; }
-
-    private TodoDto todoModel = new TodoDto();
-
-    private void HandleValidSubmit()
-    {
-        this.TodoAdded.InvokeAsync(new TodoDto() { Value = todoModel.Value });
-    }
-}

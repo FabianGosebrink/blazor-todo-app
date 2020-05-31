@@ -1,14 +1,17 @@
-﻿using BlazorTodoApp.Shared.Models;
+﻿using BlazorTodoApp.Client.Services;
+using BlazorTodoApp.Shared.Models;
 using Microsoft.AspNetCore.Components;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace BlazorTodoApp.Client.Pages.Todo
 {
-    public partial  class Todo : ComponentBase
+    public partial class Todo : ComponentBase
     {
+        [Inject]
+        private TodoService todoService { get; set; }
+
         protected override async Task OnInitializedAsync()
         {
             todoModels = await todoService.GetTodos();
