@@ -1,0 +1,23 @@
+﻿
+
+<EditForm Model="@todoModel" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <InputText id="name" @bind-Value="todoModel.Value"  class="form-control form-control-lg" type="text" placeholder="Groceries, washing car..."/>
+
+    <button type="submit" class="btn btn-primary" disabled="@(String.IsNullOrWhiteSpace(todoModel.Value))">Submit</button>
+</EditForm>
+
+@code {
+
+    [Parameter]
+    public EventCallback<TodoDto> TodoAdded { get; set; }
+
+    private TodoDto todoModel = new TodoDto();
+
+    private void HandleValidSubmit()
+    {
+        this.TodoAdded.InvokeAsync(new TodoDto() { Value = todoModel.Value });
+    }
+}

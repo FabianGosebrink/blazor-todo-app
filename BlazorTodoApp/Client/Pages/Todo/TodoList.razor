@@ -1,0 +1,22 @@
+﻿<h3>TodoList</h3>
+
+<ul class="list-group">
+    @foreach (var TodoModel in TodoModels)
+    {
+        <li class="list-group-item" style="color:@(TodoModel.Done ? "lightgray" : "inherit");"> <input @onclick="@(e => ToggleDone(e, TodoModel))"  type="checkbox" @bind="TodoModel.Done" /> @TodoModel.Value</li>
+    }
+</ul>
+
+@code{
+    [Parameter]
+    public List<TodoDto> TodoModels { get; set; }
+
+    [Parameter]
+    public EventCallback<TodoDto> TodoUpdated { get; set; }
+
+    private void ToggleDone(MouseEventArgs e, TodoDto todoDto)
+    {
+        todoDto.Done = !todoDto.Done;
+        TodoUpdated.InvokeAsync(todoDto);
+    }
+}

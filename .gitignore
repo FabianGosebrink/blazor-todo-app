@@ -1,0 +1,7 @@
+/BlazorTodoApp/Client/bin/
+/BlazorTodoApp/Client/obj
+/BlazorTodoApp/Server/obj
+/BlazorTodoApp/Server/bin
+/BlazorTodoApp/Shared/bin
+/BlazorTodoApp/Shared/obj
+/.vs/
