@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorTodoApp.Server", "BlazorTodoApp\Server\BlazorTodoApp.Server.csproj", "{518D76D3-B7EC-402F-9B46-1C3A296B7829}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorTodoApp.Server", "BlazorTodoApp\Server\BlazorTodoApp.Server.csproj", "{518D76D3-B7EC-402F-9B46-1C3A296B7829}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorTodoApp.Client", "BlazorTodoApp\Client\BlazorTodoApp.Client.csproj", "{C90CD654-C0D3-4883-8680-4D5FFB4BFE30}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorTodoApp.Client", "BlazorTodoApp\Client\BlazorTodoApp.Client.csproj", "{C90CD654-C0D3-4883-8680-4D5FFB4BFE30}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorTodoApp.Shared", "BlazorTodoApp\Shared\BlazorTodoApp.Shared.csproj", "{C397BD0B-1526-46C4-A347-5C14ADA3458D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorTodoApp.Shared", "BlazorTodoApp\Shared\BlazorTodoApp.Shared.csproj", "{C397BD0B-1526-46C4-A347-5C14ADA3458D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
