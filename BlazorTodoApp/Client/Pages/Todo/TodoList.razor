@@ -3,7 +3,11 @@
 <ul class="list-group">
     @foreach (var TodoModel in TodoModels)
     {
-        <li class="list-group-item" style="color:@(TodoModel.Done ? "lightgray" : "inherit");"> <input @onclick="@(e => ToggleDone(e, TodoModel))"  type="checkbox" @bind="TodoModel.Done" /> @TodoModel.Value</li>
+    <li class="list-group-item" style="color:@(TodoModel.Done ? "lightgray" : "inherit");">
+
+        <input type="checkbox" checked="@TodoModel.Done" @onchange="e => ToggleDone(TodoModel)">
+        @TodoModel.Value
+    </li>
     }
 </ul>
 

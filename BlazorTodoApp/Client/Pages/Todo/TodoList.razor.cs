@@ -13,7 +13,7 @@ namespace BlazorTodoApp.Client.Pages.Todo
         [Parameter]
         public EventCallback<TodoDto> TodoUpdated { get; set; }
 
-        private void ToggleDone(MouseEventArgs e, TodoDto todoDto)
+        private void ToggleDone(TodoDto todoDto)
         {
             todoDto.Done = !todoDto.Done;
             TodoUpdated.InvokeAsync(todoDto);
