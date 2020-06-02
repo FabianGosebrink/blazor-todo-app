@@ -6,11 +6,15 @@
 
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            <li class="nav-item">
+                <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                    Home 
+                </NavLink>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="todo">Todo</a>
+                <NavLink class="nav-link" href="todo" Match="NavLinkMatch.Prefix">
+                    Todo 
+                </NavLink>
             </li>
         </ul>
     </div>

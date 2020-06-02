@@ -67,6 +67,7 @@ namespace BlazorTodoApp.Client.Pages.Todo
             if (todoService.TodoAdded != null)
             {
                 todoService.TodoAdded -= HandleTodoAdded;
+                todoService.TodoUpdated -= HandleTodoUpdated;
             }
         }
 
