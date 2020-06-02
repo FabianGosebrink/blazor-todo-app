@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using BlazorTodoApp.Client.Services;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Blazored.Toast;
 
 namespace BlazorTodoApp.Client
 {
@@ -18,6 +19,8 @@ namespace BlazorTodoApp.Client
             {
                 client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress);
             });
+
+            builder.Services.AddBlazoredToast();
 
             await builder.Build().RunAsync();
         }

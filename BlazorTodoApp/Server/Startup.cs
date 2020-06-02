@@ -6,6 +6,9 @@ using Microsoft.Extensions.Hosting;
 using BlazorTodoApp.Server.Repositories;
 using Microsoft.EntityFrameworkCore;
 using BlazorTodoApp.Server.Extensions;
+using Microsoft.AspNetCore.ResponseCompression;
+using System.Linq;
+using BlazorTodoApp.Server.Hubs;
 
 namespace BlazorTodoApp.Server
 {
@@ -25,6 +28,7 @@ namespace BlazorTodoApp.Server
 
             services.AddControllersWithViews();
             services.AddRazorPages();
+            services.AddSignalR();
 
             services.AddCors(options =>
             {
@@ -42,6 +46,11 @@ namespace BlazorTodoApp.Server
             services.AddScoped<ITodoRepository, TodoRepository>();
             services.AddMappingProfiles();
 
+            services.AddResponseCompression(opts =>
+            {
+                opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
+                    new[] { "application/octet-stream" });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -60,6 +69,7 @@ namespace BlazorTodoApp.Server
             }
 
             app.UseCors("AllowAllOrigins");
+            app.UseResponseCompression();
 
             app.UseHttpsRedirection();
             app.UseBlazorFrameworkFiles();
@@ -70,6 +80,7 @@ namespace BlazorTodoApp.Server
             {
                 endpoints.MapRazorPages();
                 endpoints.MapControllers();
+                endpoints.MapHub<TodoHub>("/todoHub");
                 endpoints.MapFallbackToFile("index.html");
             });
         }

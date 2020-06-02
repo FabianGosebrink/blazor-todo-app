@@ -4,6 +4,9 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.SignalR.Client;
+using System;
+using BlazorTodoApp.Client.Pages.Todo;
 
 namespace BlazorTodoApp.Client.Services
 {
@@ -15,15 +18,31 @@ namespace BlazorTodoApp.Client.Services
             PropertyNameCaseInsensitive = true
         };
 
+        private HubConnection _hubConnection;
         private readonly string _todoEndpointUrl ;
         private readonly string _todoApi = "api/todos/";
         private readonly string _baseUrl = "https://localhost:5001/";
+
+        public EventHandler<TodoDto> TodoAdded;
+        public EventHandler<Guid> TodoDeleted;
+        public EventHandler<TodoDto> TodoUpdated;
 
 
         public TodoService(HttpClient client)
         {
             _client = client;
             _todoEndpointUrl = $"{_baseUrl}{_todoApi}";
+        }
+
+        public async Task InitSignalR()
+        {
+            _hubConnection = new HubConnectionBuilder()
+               .WithUrl($"{_baseUrl}todoHub")
+               .Build();
+
+            RegisterActions();
+
+            await _hubConnection.StartAsync();
         }
 
         public async Task<List<TodoDto>> GetTodos()
@@ -54,6 +73,24 @@ namespace BlazorTodoApp.Client.Services
 
             using var responseStream = await response.Content.ReadAsStreamAsync();
             return await JsonSerializer.DeserializeAsync<TodoDto>(responseStream, _jsonOptions);
+        }
+
+        private void RegisterActions()
+        {
+            _hubConnection.On<TodoDto>("TodoAdded", (todo) =>
+            {
+                TodoAdded?.Invoke(this, todo);
+            });
+
+            _hubConnection.On<TodoDto>("TodoUpdated", (todo) =>
+            {
+                TodoUpdated?.Invoke(this, todo);
+            });
+
+            _hubConnection.On<Guid>("TodoDeleted", (id) =>
+            {
+                TodoDeleted?.Invoke(this, id);
+            });
         }
     }
 }

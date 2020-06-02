@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using BlazorTodoApp.Server.Models;
 using BlazorTodoApp.Server.Repositories;
 using BlazorTodoApp.Shared.Models;
+using BlazorTodoApp.Server.Hubs;
+using Microsoft.AspNetCore.SignalR;
 
 namespace BlazorTodoApp.Server.Controllers
 {
@@ -14,12 +16,15 @@ namespace BlazorTodoApp.Server.Controllers
     public class TodosController : ControllerBase
     {
         private readonly ITodoRepository _todoRepository;
+        private readonly IHubContext<TodoHub> _todoHubContext;
         private readonly IMapper _mapper;
 
         public TodosController(
+            IHubContext<TodoHub> todoHubContext,
             ITodoRepository todoRepository,
             IMapper mapper)
         {
+            _todoHubContext = todoHubContext;
             _todoRepository = todoRepository;
             _mapper = mapper;
         }
@@ -62,11 +67,13 @@ namespace BlazorTodoApp.Server.Controllers
                 throw new Exception("Adding an item failed on save.");
             }
 
+            var dto = _mapper.Map<TodoDto>(newTodoEntity);
+            _todoHubContext.Clients.All.SendAsync("TodoAdded", dto);
 
             return CreatedAtRoute(
                 nameof(GetSingle),
                 new { id = newTodoEntity.Id },
-                _mapper.Map<TodoDto>(newTodoEntity));
+                dto);
         }
 
         [HttpPut]
@@ -96,6 +103,7 @@ namespace BlazorTodoApp.Server.Controllers
 
             var updatedDto = _mapper.Map<TodoDto>(updatedTodo);
 
+            _todoHubContext.Clients.All.SendAsync("TodoUpdated", updatedTodo);
 
             return Ok(updatedDto);
         }
@@ -118,6 +126,7 @@ namespace BlazorTodoApp.Server.Controllers
                 throw new Exception("Deleting an item failed on save.");
             }
 
+            _todoHubContext.Clients.All.SendAsync("TodoDeleted", id);
 
             return NoContent();
         }
