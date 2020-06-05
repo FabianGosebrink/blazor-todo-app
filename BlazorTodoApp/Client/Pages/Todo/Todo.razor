@@ -5,10 +5,10 @@
     <h3>Todo App</h3>
 
     <div>
-        <BlazorTodoApp.Client.Pages.Todo.TodoForm TodoAdded="@AddTodo"></BlazorTodoApp.Client.Pages.Todo.TodoForm>
+        <BlazorTodoApp.Client.Pages.Todo.TodoForm TodoAdded="AddTodo"></BlazorTodoApp.Client.Pages.Todo.TodoForm>
     </div>
     <div class="mt-3">
-        <BlazorTodoApp.Client.Pages.Todo.TodoList TodoModels="@todoModels" TodoUpdated="UpdateTodo"></BlazorTodoApp.Client.Pages.Todo.TodoList>
+        <BlazorTodoApp.Client.Pages.Todo.TodoList TodoModels="todoModels" TodoUpdated="UpdateTodo"></BlazorTodoApp.Client.Pages.Todo.TodoList>
     </div>
 
 </main><!-- /.container -->
